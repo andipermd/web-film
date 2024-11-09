@@ -1,0 +1,322 @@
+<%- include('layouts/nav') %>
+    <div class="container-details">
+        <div class=" container-details-content">
+            <div class="card">
+                <div class="card-body">
+                    <img src="https://image.tmdb.org/t/p/original/<%= findMovie.poster_path %>">
+                    <div class="description">
+                        <h5 class="card-title">
+                            <%= findMovie.title %>
+                        </h5>
+                        <h6 class="card-subtitle my-3"> Release date : <%= findMovie.release_date %>
+                        </h6>
+                        <p class="card-text">
+                            <%= findMovie.overview %>
+                        </p>
+                        <a id="playTrailer" class="d-flex gap-3 text-decoration-none text-white bg-none">
+                            <i class="bi bi-play"></i>
+                            <p class="mt-3 px-3">WATCH THE TRAILER</p>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Box -->
+    <div id="trailerModal" class="modal">
+        <div class="modal-content z-3">
+            <span class="close">&times;</span> <!-- Tombol X untuk menutup modal -->
+            <iframe id="trailerIframe" width="100%" height="100%" src="" title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+        </div>
+    </div>
+
+
+    <%- include('layouts/footer') %>
+        <style>
+            .container-details {
+                margin-top: 100px;
+                background-color: darkgoldenrod;
+                background-image: url('https://image.tmdb.org/t/p/original/<%= findMovie.backdrop_path %>');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                width: 100%;
+                height: 120vh;
+                position: relative;
+            }
+
+            /* Overlay untuk membuat background lebih gelap */
+            .container-details::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                /* Lapisan gelap dengan transparansi 50% */
+                z-index: 1;
+            }
+
+            /* Konten di atas background tetap terlihat */
+            .container-details-content {
+                z-index: 1;
+                position: relative;
+                color: white;
+                padding: 0px 100px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+
+            }
+
+            .card {
+                background: none;
+                /* Warna background card dengan transparansi */
+                /* Efek blur di belakang card */
+                border: none;
+                /* Tambahkan border-radius */
+                overflow: hidden;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: flex-start;
+            }
+
+            .card-body {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 50px;
+                width: 100%;
+            }
+
+            /* Gaya untuk gambar agar responsif dan rapi */
+            .card-body img {
+                z-index: 1;
+                width: 300px;
+                /* Ukuran gambar yang lebih proporsional */
+                height: auto;
+                border-radius: 10px;
+                /* Berikan gambar sudut yang membulat */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+                /* Efek bayangan pada gambar */
+                object-fit: cover;
+            }
+
+            /* Gaya untuk bagian deskripsi */
+            .description {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                color: white;
+            }
+
+            .description a {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                width: fit-content;
+            }
+
+            .description i {
+                display: flex;
+                justify-content: center;
+                /* Horizontal alignment */
+                align-items: center;
+                /* Vertical alignment */
+                font-size: 30px;
+                /* Sesuaikan ukuran font */
+                color: #e9e9e9;
+                /* Warna ikon */
+                width: 65px;
+                /* Lebar lingkaran */
+                height: 65px;
+                /* Tinggi lingkaran */
+                border: solid 0.01px #e9e9e9;
+                /* Border putih */
+                border-radius: 50%;
+                /* Membuat elemen berbentuk lingkaran */
+                background-color: rgba(0, 0, 0, 0.3);
+                /* Opsional: latar belakang gelap dengan transparansi */
+                transition: all 0.3s ease;
+                /* Efek transisi untuk hover */
+            }
+
+            .description i:hover {
+                background-color: rgba(255, 255, 255, 0.3);
+                /* Efek hover, bisa disesuaikan */
+                transform: scale(1.1);
+                /* Sedikit memperbesar saat hover */
+            }
+
+
+            .card-title {
+                font-size: 2rem;
+                font-weight: 700;
+                margin-bottom: 15px;
+                text-transform: uppercase;
+            }
+
+            .card-text {
+                font-size: 1.1rem;
+                line-height: 1.6;
+                margin-bottom: 20px;
+                font-weight: 200;
+                color: #e9e9e9;
+                font-family: "Avenir LT Std";
+                letter-spacing: 0.5px;
+
+            }
+
+
+            /* Modal */
+            .modal {
+                display: none;
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.8);
+                z-index: 3;
+                /* Pastikan lebih tinggi dari navbar */
+            }
+
+            .modal-content {
+                position: relative;
+                margin: auto;
+                padding: 0;
+                width: 70%;
+                height: 80vh;
+                background-color: #000;
+                z-index: 1060;
+                /* Tingkatkan agar konten modal tidak tertimpa */
+            }
+
+            /* Tombol X */
+            .close {
+                position: absolute;
+                top: -10px;
+                right: -50px;
+                color: white;
+                font-size: 50px;
+                font-weight: bold;
+                cursor: pointer;
+                z-index: 200;
+            }
+
+            /* Menyembunyikan scrollbar di iframe untuk kesan clean */
+            iframe {
+                border: none;
+                display: block;
+            }
+
+            @media (max-width: 768px) {
+                .container-details {
+                    margin-top: 0px;
+                    height: fit-content;
+                }
+
+                .container-details-content {
+                    width: 100%;
+                    padding: 90px 20px;
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                }
+
+                .card {
+                    width: 100%;
+                    flex-direction: column;
+                    align-items: center;
+                    padding: 20px;
+                }
+
+                .card-body {
+                    flex-direction: column;
+                    align-items: center;
+                    /* Center align all content within card-body */
+                    gap: 20px;
+                    padding: 0;
+                    width: 100%;
+                }
+
+                /* Make image responsive */
+                .card-body img {
+
+
+                    width: 80%;
+                    max-width: 250px;
+                    margin-bottom: 20px;
+                    /* Add space between image and description */
+                }
+
+                /* Description adjustments to be full-width below the image */
+                .description {
+                    width: 100%;
+                    /* Full width to ensure it starts below the image */
+                    align-items: center;
+                    padding: 10px;
+                }
+
+                .card-title {
+                    font-size: 1.8rem;
+                    margin-top: 10px;
+                }
+
+                .card-text {
+                    font-size: 1rem;
+                    line-height: 1.5;
+                    margin: 10px 0;
+                }
+
+                .description a {
+                    padding: 10px;
+                }
+
+                .description i {
+                    font-size: 25px;
+                    width: 50px;
+                    height: 50px;
+                }
+            }
+        </style>
+
+        <% if (movieTrailer.length> 0 && movieTrailer[0].key) { %>
+            <script>
+                // Mendapatkan elemen-elemen
+                const playButton = document.getElementById('playTrailer');
+                const trailerModal = document.getElementById('trailerModal');
+                const closeModal = document.querySelector('.close');
+                const trailerIframe = document.getElementById('trailerIframe');
+                const movieTrailerKey = "<%= movieTrailer[0].key %>"; // Key trailer dari API
+
+                // Saat tombol play diklik, buka modal dan muat video dengan autoplay
+                playButton.addEventListener('click', function () {
+                    trailerModal.style.display = 'flex'; // Tampilkan modal
+                    trailerIframe.src = `https://www.youtube.com/embed/${movieTrailerKey}?autoplay=1`; // Muat video dengan autoplay
+                });
+
+                // Saat tombol X diklik, tutup modal dan hentikan video
+                closeModal.addEventListener('click', function () {
+                    trailerModal.style.display = 'none'; // Sembunyikan modal
+                    trailerIframe.src = ''; // Hentikan video dengan menghapus src
+                });
+
+                // Jika pengguna mengklik di luar modal, tutup modal
+                window.addEventListener('click', function (event) {
+                    if (event.target == trailerModal) {
+                        trailerModal.style.display = 'none'; // Sembunyikan modal
+                        trailerIframe.src = ''; // Hentikan video
+                    }
+                });
+            </script>
+            <% } else { %>
+
+                <% } %>

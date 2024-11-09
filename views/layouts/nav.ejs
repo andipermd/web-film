@@ -1,0 +1,236 @@
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="navbar-wrapper container">
+        <!-- Logo di kiri -->
+        <a class="navbar-brand" href="#"> MOVIE.ID </a>
+
+        <!-- Tombol hamburger -->
+        <div class="hamburger">
+            <input type="checkbox" id="menu-toggle" />
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <!-- Menu navigasi di tengah -->
+
+        <div class="justify-content-center" id="navbarNav">
+            <ul class="menu navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">ABOUT US</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#help">HELP</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/dasboard">DASHBOARD</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Tombol Register dan Login di mobile -->
+        <div id="daftar">
+            <a class="btn btn-login" href="/login">DOWNLOAD MOVIE ID</a>
+        </div>
+
+    </div>
+</nav>
+
+<style>
+    .navbar {
+        padding: 15px 0px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: transparent;
+        transition: background-color 0.3s ease;
+        z-index: 2
+    }
+
+
+
+    .navbar.scrolled {
+        background-color: #fff;
+    }
+
+    .navbar-brand {
+        color: #0c0a20 !important;
+        font-weight: 700;
+        font-size: 40px;
+    }
+
+    .nav-link {
+        color: #0c0a20 !important;
+        font-weight: 600;
+    }
+
+    .nav-link:hover {
+        color: #0c0a20 !important;
+    }
+
+    #daftar {
+        display: flex;
+        gap: 6px;
+    }
+
+    .btn-register {
+        background-color: #28a745;
+        color: #fff;
+        border-radius: 20px;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
+
+    .btn-register:hover {
+        background-color: #218838;
+    }
+
+    .btn-login {
+        background: linear-gradient(to right, rgb(197, 136, 23), rgb(255, 203, 108));
+
+        letter-spacing: 2px;
+        color: #0c0a20;
+        font-weight: 600;
+        border-radius: 20px;
+        padding: 2px 16px;
+        text-decoration: none;
+    }
+
+    .btn-login:hover {
+        background-color: #0056b3;
+    }
+
+    .hamburger {
+        display: none;
+    }
+
+
+
+    @media (max-width: 991.98px) {
+        .navbar {
+            padding: 5px 0px;
+        }
+
+
+        .navbar-brand {
+            color: #0c0a20 !important;
+            font-size: 28px;
+        }
+
+        /* Hamburger menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 24px;
+            width: 30px;
+            cursor: pointer;
+            z-index: 3;
+            position: absolute;
+            right: 20px;
+        }
+
+        .hamburger input {
+            position: absolute;
+            width: 40px;
+            height: 28px;
+            cursor: pointer;
+            opacity: 0;
+            z-index: 3;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: #0c0a20;
+            border-radius: 2px;
+            transition: all 0.4s ease;
+        }
+
+        .hamburger input:checked~span:nth-child(2) {
+            background-color: black;
+            transform: rotate(45deg) translateY(-1px);
+            transform-origin: 0 0;
+        }
+
+        .hamburger input:checked~span:nth-child(3) {
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        .hamburger input:checked~span:last-child {
+            background-color: black;
+            transform: rotate(-45deg) translate(-2px, -1px);
+            transform-origin: 0 0;
+        }
+
+        /* Styling tombol daftar yang disembunyikan awalnya */
+        #daftar {
+            display: none;
+        }
+
+        /* Pengaturan navbar item */
+        .navbar-nav {
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            /* Gradasi ungu ke biru */
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            justify-content: space-evenly;
+            text-align: center;
+            z-index: 1;
+            transform: translateY(-100%);
+            transition: all 1s;
+        }
+
+
+        .nav-link {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        /* Mengatur #daftar agar berada di atas, tersembunyi, dan muncul di bawah saat aktif */
+        .navbar-nav.show {
+            transform: translatey(0);
+            transition: all 1s;
+        }
+
+        /* Mengaktifkan #daftar agar turun ke bawah saat di klik */
+
+
+        /* Tombol download styling */
+        .btn-login {
+            width: 90%;
+            padding: 10px;
+            text-align: center;
+            font-size: 16px;
+        }
+    }
+</style>
+
+<script>
+    window.addEventListener('scroll', function () {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    const hamburger = document.querySelector('.hamburger input');
+    hamburger.addEventListener('click', function () {
+        const navbarNav = document.querySelector('.navbar-nav');
+        navbarNav.classList.toggle('show');
+    });
+
+
+</script>
